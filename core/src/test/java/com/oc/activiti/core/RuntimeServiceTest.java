@@ -135,4 +135,89 @@ public class RuntimeServiceTest {
             log.info("execution = {}", execution);
         }
     }
+
+    @Test
+    public void testTrigger() {
+        repositoryService.createDeployment()
+                .name("test").addClasspathResource("process/my-process-trigger.bpmn20.xml")
+                .deploy();
+
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("my-process");
+
+        Execution execution = runtimeService.createExecutionQuery()
+                .activityId("someTask")
+                .singleResult();
+
+        log.info("execution = {}", execution);
+
+        runtimeService.trigger(execution.getId());
+
+        execution = runtimeService.createExecutionQuery()
+                .activityId("someTask")
+                .singleResult();
+
+        log.info("execution = {}", execution);
+
+    }
+
+    @Test
+    public void testSignalReceived() {
+        repositoryService.createDeployment()
+                .name("test").addClasspathResource("process/my-process-signal-received.bpmn20.xml")
+                .deploy();
+
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("my-process");
+
+        Execution execution = runtimeService.createExecutionQuery()
+                .signalEventSubscriptionName("my-signal")
+                .singleResult();
+
+        log.info("execution = {}", execution);
+
+        runtimeService.signalEventReceived("my-signal");
+
+        execution = runtimeService.createExecutionQuery()
+                .signalEventSubscriptionName("my-signal")
+                .singleResult();
+
+        log.info("execution = {}", execution);
+
+    }
+
+    @Test
+    public void testMessageReceived() {
+        repositoryService.createDeployment()
+                .name("test").addClasspathResource("process/my-process-message-received.bpmn20.xml")
+                .deploy();
+
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("my-process");
+
+        Execution execution = runtimeService.createExecutionQuery()
+                .messageEventSubscriptionName("my-message")
+                .singleResult();
+
+        log.info("execution = {}", execution);
+
+        runtimeService.messageEventReceived("my-message", execution.getId());
+
+        execution = runtimeService.createExecutionQuery()
+                .messageEventSubscriptionName("my-message")
+                .singleResult();
+
+        log.info("execution = {}", execution);
+
+    }
+
+    @Test
+    public void testMessage() {
+        repositoryService.createDeployment()
+                .name("test").addClasspathResource("process/my-process-message.bpmn20.xml")
+                .deploy();
+
+        ProcessInstance processInstance = runtimeService
+//                .startProcessInstanceByKey("my-process");
+                .startProcessInstanceByMessage("my-message");
+
+        log.info("processInstance = {}", processInstance);
+    }
 }
