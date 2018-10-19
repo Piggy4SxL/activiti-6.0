@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- DataBase Config -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="url" value="jdbc:h2:mem:activiti"/>
         <property name="driverClassName" value="org.h2.Driver"/>
@@ -13,15 +14,19 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!-- Activiti Config -->
     <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
         <property name="dataSource" ref="dataSource"/>
         <property name="transactionManager" ref="transactionManager"/>
         <property name="databaseSchemaUpdate" value="true"/>
+        <!-- Highest History Level For Test -->
+        <property name="historyLevel" value="FULL"/>
     </bean>
     <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
         <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
     </bean>
 
+    <!-- Core Service -->
     <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
     <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"/>
     <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>

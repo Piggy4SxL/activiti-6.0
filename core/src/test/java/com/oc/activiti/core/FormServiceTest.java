@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import lombok.extern.log4j.Log4j2;
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
@@ -36,9 +35,6 @@ public class FormServiceTest {
 
     @Autowired
     private RepositoryService repositoryService;
-
-    @Autowired
-    private RuntimeService runtimeService;
 
     @Autowired
     private FormService formService;
