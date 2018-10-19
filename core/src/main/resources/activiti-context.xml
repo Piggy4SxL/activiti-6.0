@@ -21,6 +21,13 @@
         <property name="databaseSchemaUpdate" value="true"/>
         <!-- Highest History Level For Test -->
         <property name="historyLevel" value="FULL"/>
+        <!-- Async Execute Job -->
+        <property name="asyncExecutorActivate" value="true"/>
+        <property name="customMybatisMappers">
+            <set>
+                <value>com.oc.activiti.core.mapper.MyCustomMapper</value>
+            </set>
+        </property>
     </bean>
     <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
         <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
@@ -33,6 +40,7 @@
     <bean id="formService" factory-bean="processEngine" factory-method="getFormService"/>
     <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
     <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
+    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
     <bean id="activitiRule" class="org.activiti.engine.test.ActivitiRule">
         <property name="processEngine" ref="processEngine"/>
     </bean>
