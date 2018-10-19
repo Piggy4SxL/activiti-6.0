@@ -25,7 +25,7 @@
     <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
     <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"/>
     <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
-    <bean id="formService" factory-bean="processEngine" factory-method="getFormEngineFormService"/>
+    <bean id="formService" factory-bean="processEngine" factory-method="getFormService"/>
     <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
     <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
     <bean id="activitiRule" class="org.activiti.engine.test.ActivitiRule">
